@@ -36,12 +36,12 @@ def fluctuation_amplitude(self):
 
 
 @fluctuation_amplitude.setter
-def fluctuation_amplitude(self, setting):
-    if setting < 0:
+def fluctuation_amplitude(self, amplitude):
+    if amplitude < 0:
         raise ValueError("Fluctuation effect setting must be larger than 0")
-    if setting:
+    if amplitude:
         self._fluctuation_hold_value = getattr(self, self._value_name)
-    self._fluctuation_amplitude = setting
+    self._fluctuation_amplitude = amplitude
 
 
 @property
