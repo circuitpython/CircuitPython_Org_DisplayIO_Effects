@@ -7,7 +7,6 @@
 Use the random throttle effect for the Dial.
 """
 
-import time
 import board
 import displayio
 import terminalio
