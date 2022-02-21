@@ -67,7 +67,8 @@ def update_fluctuation(self):
     if self._fluctuation_destination in (None, self._fluctuation_hold_value):
         limit_bound = self._fluctuation_amplitude * 10
         self._fluctuation_destination = (
-            random.uniform(-limit_bound, limit_bound) / 10 + self._fluctuation_hold_value
+            random.uniform(-limit_bound, limit_bound) / 10
+            + self._fluctuation_hold_value
         )
 
     value = getattr(self, self._value_name)
