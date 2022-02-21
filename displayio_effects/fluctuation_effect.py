@@ -7,7 +7,7 @@
 `displayio_effects.fluctuation_effect`
 ================================================================================
 
-Add the throttle effect to your widgets
+Add the fluctuation effect to your widgets
 
 
 * Author(s): Alec Delaney
