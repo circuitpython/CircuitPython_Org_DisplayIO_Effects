@@ -12,7 +12,7 @@ import time
 import board
 import displayio
 from displayio_gauge import Gauge
-from displayio_effects import throttle_effect
+from displayio_effects import fluctuation_effect
 
 display = board.DISPLAY
 
@@ -27,7 +27,7 @@ bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=
 main_group.append(bg_sprite)
 display.show(main_group)
 
-throttle_effect.hook_throttle_effect(Gauge, "level")
+fluctuation_effect.hook_fluctuation_effect(Gauge, "level")
 
 my_gauge = Gauge(
     x=90,
@@ -41,11 +41,10 @@ my_gauge = Gauge(
 )
 main_group.append(my_gauge)
 
-my_gauge.throttle_effect = 1
-my_gauge.throttle_effect_move_rate = 0.01
+my_gauge.fluctuation_amplitude = 1
+my_gauge.fluctuation_move_rate = 0.01
 
 
 while True:
 
-    my_gauge.throttle_update()
-    display.refresh()
+    my_gauge.update_fluctuation()

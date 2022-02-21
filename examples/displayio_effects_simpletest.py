@@ -4,14 +4,14 @@
 # SPDX-License-Identifier: Unlicense
 #############################
 """
-Use the random throttle effect for the Dial.
+Use the random fluctuation effect for the Dial.
 """
 
 import board
 import displayio
 import terminalio
 from displayio_dial import Dial
-from displayio_effects import throttle_effect
+from displayio_effects import fluctuation_effect
 
 # Fonts used for the Dial tick labels
 tick_font = terminalio.FONT
@@ -26,7 +26,7 @@ minimum_value = 0
 maximum_value = 100
 
 # Hook in the throttle effect for the Dial widget
-throttle_effect.hook_throttle_effect(Dial, "value")
+fluctuation_effect.hook_fluctuation_effect(Dial, "value")
 
 # Create a Dial widget
 my_dial = Dial(
@@ -49,13 +49,12 @@ my_group.append(my_dial)
 
 display.show(my_group)  # add high level Group to the display
 
-# Set the dial to the value before turning on the throttle effect
+# Set the dial to the value before turning on the fluctuation effect
 my_dial.value = 50
 
-my_dial.throttle_effect = 5  # Fluctuate at most "5" in either direction
-my_dial.throttle_effect_move_rate = 0.1  # Fluctuate at "0.1" per throttle_update()
+my_dial.fluctuation_amplitude = 5  # Fluctuate at most "5" in either direction
+my_dial.fluctuation_move_rate = 0.01  # Fluctuate at "0.01" per throttle_update()
 
 while True:
 
-    my_dial.throttle_update()
-    display.refresh()
+    my_dial.update_fluctuation()
