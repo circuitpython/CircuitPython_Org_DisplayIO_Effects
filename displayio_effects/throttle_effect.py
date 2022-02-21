@@ -101,7 +101,7 @@ def hook_fluctuation_effect(widget_class, value_name):
     .. code-block:: python
 
         from displayio_dial import Dial
-        from displayio_effects import throttle_effect
+        from displayio_effects import fluctuation_effect
 
         fluctuation_effect.hook_fluctuation_effect(Dial, "value")
 
