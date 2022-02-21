@@ -27,7 +27,7 @@ minimum_value = 0
 maximum_value = 100
 
 # Hook in the throttle effect for the Dial widget
-throttle_effect.hook_throttle_effect(Dial)
+throttle_effect.hook_throttle_effect(Dial, "value")
 
 # Create a Dial widget
 my_dial = Dial(
