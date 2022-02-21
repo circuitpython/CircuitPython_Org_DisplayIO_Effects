@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 # pylint: disable=protected-access
 """
-`displayio_effects.throttle_effect`
+`displayio_effects.fluctuation_effect`
 ================================================================================
 
 Add the throttle effect to your widgets
