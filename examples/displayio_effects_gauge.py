@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2021 GaryZ, Alec Delaney
+# SPDX-FileCopyrightText: Copyright (c) 2021 Alec Delaney
 #
 # SPDX-License-Identifier: Unlicense
 

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Alec Delaney
+# SPDX-FileCopyrightText: 2021 GaryZ, Alec Delaney
 # SPDX-FileCopyrightText: Copyright (c) 2022 Alec Delaney for CircuitPython Organization
 #
 # SPDX-License-Identifier: Unlicense
