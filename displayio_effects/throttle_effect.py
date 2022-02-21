@@ -88,7 +88,7 @@ def update_fluctuation(self):
 
 
 def hook_fluctuation_effect(widget_class, value_name):
-    """Adds the throttle effect for the given classes
+    """Adds the fluctuation effect for the given class
 
     :param widget_classes: The widgets that should have this effect hooked
         into them.
