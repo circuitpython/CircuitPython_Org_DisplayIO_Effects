@@ -3,10 +3,10 @@
 #
 # SPDX-License-Identifier: MIT
 """
-`displayio_effects`
+`displayio_effects.throttle_effect`
 ================================================================================
 
-Add some flair to your widgets with effects!
+Add the throttle effect to your widgets
 
 
 * Author(s): Alec Delaney
@@ -28,7 +28,7 @@ __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
 
 @property
 def throttle_effect(self):
-    """The furtherest the throttle effect can randomly set the dial value relative
+    """The furtherest the throttle effect can randomly set the widget value relative
     to its true position, in either direction.
     """
     return self._throttle_setting
@@ -43,7 +43,9 @@ def throttle_effect(self, setting):
 
 @property
 def throttle_effect_move_rate(self):
-    """The speed at which the throttle effect moves the dial per update"""
+    """The speed at which the throttle effect moves the widget vaalue
+    per update"""
+
     return self._throttle_move_rate
 
 @throttle_effect_move_rate.setter
@@ -51,7 +53,7 @@ def throttle_effect_move_rate(self, rate):
     self._throttle_move_rate = rate
 
 def throttle_update(self):
-    """Updates the gauge and propagates the throttle effect refresh"""
+    """Updates the widget value and propagates the throttle effect refresh"""
 
     if self._throttle_setting == 0:
         self._throttle_destination = None
