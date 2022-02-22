@@ -32,7 +32,7 @@ __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
 COLORWHEEL_WIDGET_VALUES = {
     WidgetType.DIAL: {
         "path": ("_needle", "_palette"),
-        "index" : 0,
+        "index": 0,
     },
     WidgetType.GAUGE: {
         "path": ("_palette"),
