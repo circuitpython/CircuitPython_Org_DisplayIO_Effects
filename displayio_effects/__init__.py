@@ -21,6 +21,7 @@ Implementation Notes
   https://circuitpython.org/downloads
 """
 
+
 class WidgetType:
     """Enum values  for customizable widget types"""
 

@@ -98,8 +98,8 @@ def update_fluctuation(self):
 def hook_fluctuation_effect(widget_class, widget_type):
     """Adds the fluctuation effect for the given class
 
-    :param widget_class: The widget that should have this effect hooked
-        into them.
+    :param widget_class: The widget class that should have this effect hooked
+        into it
     :param int widget_type: The enum value of this widget type, must be a
         valid ~WidgetType
 
@@ -109,7 +109,6 @@ def hook_fluctuation_effect(widget_class, widget_type):
     .. code-block:: python
 
         from displayio_dial import Dial
-        from 
         from displayio_effects import WidgetType, fluctuation_effect
 
         fluctuation_effect.hook_fluctuation_effect(Dial, WidgetType.DIAL)
@@ -118,7 +117,9 @@ def hook_fluctuation_effect(widget_class, widget_type):
 
     value_name = FLUCTUATION_WIDGET_VALUES.get(widget_type)
     if not value_name:
-        raise ValueError("The given widget does not have the ability to use this effect")
+        raise ValueError(
+            "The given widget does not have the ability to use this effect"
+        )
 
     setattr(widget_class, "_value_name", value_name)
 
