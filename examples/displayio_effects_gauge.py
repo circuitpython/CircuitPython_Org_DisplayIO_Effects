@@ -3,8 +3,7 @@
 # SPDX-License-Identifier: Unlicense
 
 """
-Create multiple gauge's and change their level.
-This works on any CircuitPython device with a built-in display.
+Use the random fluctuation effect for the Gauge.
 """
 
 
