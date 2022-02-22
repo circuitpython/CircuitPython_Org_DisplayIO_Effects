@@ -22,6 +22,7 @@ Implementation Notes
 """
 
 
+# pylint: disable=too-few-public-methods
 class WidgetType:
     """Enum values  for customizable widget types"""
 
