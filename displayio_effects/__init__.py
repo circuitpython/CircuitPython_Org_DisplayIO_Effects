@@ -27,7 +27,7 @@ WIDGET_TYPE_ATTR = "_widget_type"
 # pylint: disable=too-few-public-methods
 class WidgetType:
     """Enum values  for customizable widget types.  Valid options are:
-    
+
     - ``WidgetType.DIAL`` - Dial widget
     - ``WidgetType.GAUGE`` - Gauge widget
     """
