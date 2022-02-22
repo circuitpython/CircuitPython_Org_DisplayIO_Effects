@@ -11,7 +11,7 @@ import board
 import displayio
 import terminalio
 from displayio_dial import Dial
-from displayio_effects import fluctuation_effect
+from displayio_effects import WidgetType, fluctuation_effect
 
 # Fonts used for the Dial tick labels
 tick_font = terminalio.FONT
@@ -26,7 +26,7 @@ minimum_value = 0
 maximum_value = 100
 
 # Hook in the throttle effect for the Dial widget
-fluctuation_effect.hook_fluctuation_effect(Dial, "value")
+fluctuation_effect.hook_fluctuation_effect(Dial, WidgetType.DIAL)
 
 # Create a Dial widget
 my_dial = Dial(
