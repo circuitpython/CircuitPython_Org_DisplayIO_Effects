@@ -22,9 +22,16 @@ Implementation Notes
 """
 
 import random
+from displayio_effects import WidgetType
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
+
+
+FLUCTUATION_WIDGET_VALUES = {
+    WidgetType.DIAL: "value",
+    WidgetType.GAUGE: "level",
+}
 
 
 @property
@@ -88,13 +95,13 @@ def update_fluctuation(self):
         self._fluctuation_destination = self._fluctuation_hold_value
 
 
-def hook_fluctuation_effect(widget_class, value_name):
+def hook_fluctuation_effect(widget_class, widget_type):
     """Adds the fluctuation effect for the given class
 
-    :param widget_classes: The widgets that should have this effect hooked
+    :param widget_class: The widget that should have this effect hooked
         into them.
-    :param str value_name: The name of the attribute that sets the "value"
-        for this widget
+    :param int widget_type: The enum value of this widget type, must be a
+        valid ~WidgetType
 
     For example, to hook this into the ``Dial`` widget, you would use the
     following code:
@@ -102,11 +109,16 @@ def hook_fluctuation_effect(widget_class, value_name):
     .. code-block:: python
 
         from displayio_dial import Dial
-        from displayio_effects import fluctuation_effect
+        from 
+        from displayio_effects import WidgetType, fluctuation_effect
 
-        fluctuation_effect.hook_fluctuation_effect(Dial, "value")
+        fluctuation_effect.hook_fluctuation_effect(Dial, WidgetType.DIAL)
 
     """
+
+    value_name = FLUCTUATION_WIDGET_VALUES.get(widget_type)
+    if not value_name:
+        raise ValueError("The given widget does not have the ability to use this effect")
 
     setattr(widget_class, "_value_name", value_name)
 
