@@ -22,6 +22,8 @@ Implementation Notes
 """
 
 
+WIDGET_TYPE_ATTR = "_widget_type"
+
 # pylint: disable=too-few-public-methods
 class WidgetType:
     """Enum values  for customizable widget types"""

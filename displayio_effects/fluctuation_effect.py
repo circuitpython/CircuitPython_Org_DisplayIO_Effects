@@ -22,7 +22,7 @@ Implementation Notes
 """
 
 import random
-from displayio_effects import WidgetType
+from displayio_effects import WidgetType, WIDGET_TYPE_ATTR
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
@@ -44,10 +44,11 @@ def fluctuation_amplitude(self):
 
 @fluctuation_amplitude.setter
 def fluctuation_amplitude(self, amplitude):
+    value_name = getattr(self, WIDGET_TYPE_ATTR)
     if amplitude < 0:
         raise ValueError("Fluctuation effect setting must be larger than 0")
     if amplitude:
-        self._fluctuation_hold_value = getattr(self, self._value_name)
+        self._fluctuation_hold_value = getattr(self, value_name)
     self._fluctuation_amplitude = amplitude
 
 
@@ -67,6 +68,7 @@ def fluctuation_move_rate(self, rate):
 def update_fluctuation(self):
     """Updates the widget value and propagates the fluctuation effect refresh"""
 
+    value_name = getattr(self, WIDGET_TYPE_ATTR)
     if self._fluctuation_amplitude == 0:
         self._fluctuation_destination = None
         return
@@ -78,13 +80,13 @@ def update_fluctuation(self):
             + self._fluctuation_hold_value
         )
 
-    value = getattr(self, self._value_name)
+    value = getattr(self, value_name)
     value = (
         value + self._fluctuation_move_rate
         if self._fluctuation_destination > value
         else value - self._fluctuation_move_rate
     )
-    setattr(self, self._value_name, value)
+    setattr(self, value_name, value)
 
     threshold_check = (
         value >= self._fluctuation_destination
@@ -115,13 +117,12 @@ def hook_fluctuation_effect(widget_class, widget_type):
 
     """
 
-    value_name = FLUCTUATION_WIDGET_VALUES.get(widget_type)
-    if not value_name:
+    if not FLUCTUATION_WIDGET_VALUES.get(widget_type):
         raise ValueError(
             "The given widget does not have the ability to use this effect"
         )
 
-    setattr(widget_class, "_value_name", value_name)
+    setattr(widget_class, WIDGET_TYPE_ATTR, widget_type)
 
     setattr(widget_class, "_fluctuation_destination", None)
     setattr(widget_class, "_fluctuation_hold_value", 0)
