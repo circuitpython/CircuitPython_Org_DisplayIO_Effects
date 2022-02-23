@@ -31,11 +31,11 @@ __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
 
 COLORWHEEL_WIDGET_VALUES = {
     WidgetType.DIAL: {
-        "path": ("_needle", "_palette"),
+        "path": ["_needle", "pixel_shader"],
         "index": 0,
     },
     WidgetType.GAUGE: {
-        "path": ("_palette"),
+        "path": ["_palette"],
         "index": 2,
     },
 }
@@ -43,14 +43,9 @@ COLORWHEEL_WIDGET_VALUES = {
 COLORWHEEL_COLORS = cycle([colorwheel(color_value) for color_value in range(256)])
 
 
-def update_colorwheel(self):
-    """Updates the widget value and propagates the fluctuation effect refresh"""
-
-    palette_map = getattr(self, WIDGET_TYPE_ATTR)
-    palette_attr = self
-    for attr_path in palette_map["path"]:
-        palette_attr = getattr(palette_attr, attr_path)
-    palette_attr[palette_map["index"]] = next(COLORWHEEL_COLORS)
+def get_widget_value(instance):
+    widget_type = getattr(instance, WIDGET_TYPE_ATTR)
+    return COLORWHEEL_WIDGET_VALUES[widget_type]
 
 
 def hook_colorwheel_effect(widget_class, widget_type):
@@ -81,3 +76,13 @@ def hook_colorwheel_effect(widget_class, widget_type):
     setattr(widget_class, WIDGET_TYPE_ATTR, widget_type)
 
     setattr(widget_class, "update_colorwheel", update_colorwheel)
+
+
+def update_colorwheel(self):
+    """Updates the widget value and propagates the fluctuation effect refresh"""
+
+    palette_map = get_widget_value(self)
+    palette_attr = self
+    for attr_path in palette_map["path"]:
+        palette_attr = getattr(palette_attr, attr_path)
+    palette_attr[palette_map["index"]] = next(COLORWHEEL_COLORS)

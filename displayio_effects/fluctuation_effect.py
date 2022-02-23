@@ -33,6 +33,10 @@ FLUCTUATION_WIDGET_VALUES = {
     WidgetType.GAUGE: "level",
 }
 
+def get_value_name(instance):
+    widget_type = getattr(instance, WIDGET_TYPE_ATTR)
+    return FLUCTUATION_WIDGET_VALUES[widget_type]
+
 
 @property
 def fluctuation_amplitude(self):
@@ -44,7 +48,7 @@ def fluctuation_amplitude(self):
 
 @fluctuation_amplitude.setter
 def fluctuation_amplitude(self, amplitude):
-    value_name = getattr(self, WIDGET_TYPE_ATTR)
+    value_name = get_value_name(self)
     if amplitude < 0:
         raise ValueError("Fluctuation effect setting must be larger than 0")
     if amplitude:
@@ -68,7 +72,8 @@ def fluctuation_move_rate(self, rate):
 def update_fluctuation(self):
     """Updates the widget value and propagates the fluctuation effect refresh"""
 
-    value_name = getattr(self, WIDGET_TYPE_ATTR)
+    value_name = get_value_name(self)
+
     if self._fluctuation_amplitude == 0:
         self._fluctuation_destination = None
         return
@@ -130,6 +135,6 @@ def hook_fluctuation_effect(widget_class, widget_type):
     setattr(widget_class, "fluctuation_amplitude", fluctuation_amplitude)
     setattr(widget_class, "_fluctuation_amplitude", 0)
     setattr(widget_class, "fluctuation_move_rate", fluctuation_move_rate)
-    setattr(widget_class, "_fluctuation_move_rate", 0.1)
+    setattr(widget_class, "_fluctuation_move_rate", 0.01)
 
     setattr(widget_class, "update_fluctuation", update_fluctuation)
