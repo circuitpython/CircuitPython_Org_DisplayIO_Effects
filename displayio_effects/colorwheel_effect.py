@@ -43,7 +43,7 @@ COLORWHEEL_WIDGET_VALUES = {
 COLORWHEEL_COLORS = cycle([colorwheel(color_value) for color_value in range(256)])
 
 
-def get_widget_value(instance):
+def _get_widget_value(instance):
     widget_type = getattr(instance, WIDGET_TYPE_ATTR)
     return COLORWHEEL_WIDGET_VALUES[widget_type]
 
@@ -81,7 +81,7 @@ def hook_colorwheel_effect(widget_class, widget_type):
 def update_colorwheel(self):
     """Updates the widget value and propagates the fluctuation effect refresh"""
 
-    palette_map = get_widget_value(self)
+    palette_map = _get_widget_value(self)
     palette_attr = self
     for attr_path in palette_map["path"]:
         palette_attr = getattr(palette_attr, attr_path)
