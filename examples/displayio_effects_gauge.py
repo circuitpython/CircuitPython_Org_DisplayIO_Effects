@@ -3,8 +3,7 @@
 # SPDX-License-Identifier: Unlicense
 
 """
-Create multiple gauge's and change their level.
-This works on any CircuitPython device with a built-in display.
+Use the random fluctuation effect for the Gauge.
 """
 
 
@@ -12,7 +11,7 @@ import time
 import board
 import displayio
 from displayio_gauge import Gauge
-from displayio_effects import fluctuation_effect
+from displayio_effects import WidgetType, fluctuation_effect
 
 display = board.DISPLAY
 
@@ -27,7 +26,7 @@ bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=
 main_group.append(bg_sprite)
 display.show(main_group)
 
-fluctuation_effect.hook_fluctuation_effect(Gauge, "level")
+fluctuation_effect.hook_fluctuation_effect(Gauge, WidgetType.GAUGE)
 
 my_gauge = Gauge(
     x=90,

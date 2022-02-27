@@ -22,9 +22,21 @@ Implementation Notes
 """
 
 import random
+from displayio_effects import WidgetType, WIDGET_TYPE_ATTR
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
+
+
+FLUCTUATION_WIDGET_VALUES = {
+    WidgetType.DIAL: "value",
+    WidgetType.GAUGE: "level",
+}
+
+
+def _get_value_name(instance):
+    widget_type = getattr(instance, WIDGET_TYPE_ATTR)
+    return FLUCTUATION_WIDGET_VALUES[widget_type]
 
 
 @property
@@ -37,10 +49,11 @@ def fluctuation_amplitude(self):
 
 @fluctuation_amplitude.setter
 def fluctuation_amplitude(self, amplitude):
+    value_name = _get_value_name(self)
     if amplitude < 0:
         raise ValueError("Fluctuation effect setting must be larger than 0")
     if amplitude:
-        self._fluctuation_hold_value = getattr(self, self._value_name)
+        self._fluctuation_hold_value = getattr(self, value_name)
     self._fluctuation_amplitude = amplitude
 
 
@@ -60,6 +73,8 @@ def fluctuation_move_rate(self, rate):
 def update_fluctuation(self):
     """Updates the widget value and propagates the fluctuation effect refresh"""
 
+    value_name = _get_value_name(self)
+
     if self._fluctuation_amplitude == 0:
         self._fluctuation_destination = None
         return
@@ -71,13 +86,13 @@ def update_fluctuation(self):
             + self._fluctuation_hold_value
         )
 
-    value = getattr(self, self._value_name)
+    value = getattr(self, value_name)
     value = (
         value + self._fluctuation_move_rate
         if self._fluctuation_destination > value
         else value - self._fluctuation_move_rate
     )
-    setattr(self, self._value_name, value)
+    setattr(self, value_name, value)
 
     threshold_check = (
         value >= self._fluctuation_destination
@@ -88,13 +103,13 @@ def update_fluctuation(self):
         self._fluctuation_destination = self._fluctuation_hold_value
 
 
-def hook_fluctuation_effect(widget_class, value_name):
+def hook_fluctuation_effect(widget_class, widget_type):
     """Adds the fluctuation effect for the given class
 
-    :param widget_classes: The widgets that should have this effect hooked
-        into them.
-    :param str value_name: The name of the attribute that sets the "value"
-        for this widget
+    :param widget_class: The widget class that should have this effect hooked
+        into it
+    :param int widget_type: The enum value of this widget type, must be a
+        valid ~WidgetType
 
     For example, to hook this into the ``Dial`` widget, you would use the
     following code:
@@ -102,13 +117,18 @@ def hook_fluctuation_effect(widget_class, value_name):
     .. code-block:: python
 
         from displayio_dial import Dial
-        from displayio_effects import fluctuation_effect
+        from displayio_effects import WidgetType, fluctuation_effect
 
-        fluctuation_effect.hook_fluctuation_effect(Dial, "value")
+        fluctuation_effect.hook_fluctuation_effect(Dial, WidgetType.DIAL)
 
     """
 
-    setattr(widget_class, "_value_name", value_name)
+    if not FLUCTUATION_WIDGET_VALUES.get(widget_type):
+        raise ValueError(
+            "The given widget does not have the ability to use this effect"
+        )
+
+    setattr(widget_class, WIDGET_TYPE_ATTR, widget_type)
 
     setattr(widget_class, "_fluctuation_destination", None)
     setattr(widget_class, "_fluctuation_hold_value", 0)
@@ -116,6 +136,6 @@ def hook_fluctuation_effect(widget_class, value_name):
     setattr(widget_class, "fluctuation_amplitude", fluctuation_amplitude)
     setattr(widget_class, "_fluctuation_amplitude", 0)
     setattr(widget_class, "fluctuation_move_rate", fluctuation_move_rate)
-    setattr(widget_class, "_fluctuation_move_rate", 0.1)
+    setattr(widget_class, "_fluctuation_move_rate", 0.01)
 
     setattr(widget_class, "update_fluctuation", update_fluctuation)
