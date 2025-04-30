@@ -6,11 +6,12 @@
 Use the random fluctuation effect for the Gauge.
 """
 
-
 import time
+
 import board
 import displayio
 from displayio_gauge import Gauge
+
 from displayio_effects import WidgetType, fluctuation_effect
 
 display = board.DISPLAY
@@ -24,7 +25,7 @@ color_palette = displayio.Palette(1)
 color_palette[0] = 0x000000
 bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=0)
 main_group.append(bg_sprite)
-display.show(main_group)
+display.root_group = main_group
 
 fluctuation_effect.hook_fluctuation_effect(Gauge, WidgetType.GAUGE)
 
@@ -45,5 +46,4 @@ my_gauge.fluctuation_move_rate = 0.01
 
 
 while True:
-
     my_gauge.update_fluctuation()

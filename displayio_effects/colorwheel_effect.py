@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 # pylint: disable=protected-access
 """
-`displayio_effects.fluctuation_effect`
+`displayio_effects.colorwheel_effect`
 ================================================================================
 
 Add the colorwheel effect to your widgets
@@ -21,9 +21,10 @@ Implementation Notes
   https://circuitpython.org/downloads
 """
 
+from adafruit_itertools import cycle
 from rainbowio import colorwheel
-from adafruit_itertools.adafruit_itertools import cycle
-from displayio_effects import WidgetType, WIDGET_TYPE_ATTR
+
+from displayio_effects import WIDGET_TYPE_ATTR, WidgetType
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
@@ -69,9 +70,7 @@ def hook_colorwheel_effect(widget_class, widget_type):
     """
 
     if not COLORWHEEL_WIDGET_VALUES.get(widget_type):
-        raise ValueError(
-            "The given widget does not have the ability to use this effect"
-        )
+        raise ValueError("The given widget does not have the ability to use this effect")
 
     setattr(widget_class, WIDGET_TYPE_ATTR, widget_type)
 

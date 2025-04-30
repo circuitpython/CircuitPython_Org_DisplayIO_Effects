@@ -11,6 +11,7 @@ import board
 import displayio
 import terminalio
 from displayio_dial import Dial
+
 from displayio_effects import WidgetType, fluctuation_effect
 
 # Fonts used for the Dial tick labels
@@ -47,7 +48,7 @@ my_dial = Dial(
 my_group = displayio.Group()
 my_group.append(my_dial)
 
-display.show(my_group)  # add high level Group to the display
+display.root_group = my_group  # add high level Group to the display
 
 # Set the dial to the value before turning on the fluctuation effect
 my_dial.value = 50
@@ -56,5 +57,4 @@ my_dial.fluctuation_amplitude = 5  # Fluctuate at most "5" in either direction
 my_dial.fluctuation_move_rate = 0.01  # Fluctuate at "0.01" per throttle_update()
 
 while True:
-
     my_dial.update_fluctuation()

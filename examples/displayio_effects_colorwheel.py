@@ -8,10 +8,12 @@ Use the random fluctuation effect for the Dial.
 """
 
 import time
+
 import board
 import displayio
 import terminalio
 from displayio_dial import Dial
+
 from displayio_effects import WidgetType, colorwheel_effect
 
 # Fonts used for the Dial tick labels
@@ -47,12 +49,11 @@ my_dial = Dial(
 my_group = displayio.Group()
 my_group.append(my_dial)
 
-display.show(my_group)  # add high level Group to the display
+display.root_group = my_group  # add high level Group to the display
 
 # Set the dial to the value before turning on the fluctuation effect
 my_dial.value = 50
 
 while True:
-
     my_dial.update_colorwheel()
     time.sleep(0.01)

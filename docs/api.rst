@@ -4,5 +4,11 @@
 .. If your library file(s) are nested in a directory (e.g. /adafruit_foo/foo.py)
 .. use this format as the module name: "adafruit_foo.foo"
 
+API Reference
+#############
+
 .. automodule:: displayio_effects.fluctuation_effect
+    :members:
+
+.. automodule:: displayio_effects.colorwheel_effect
     :members:

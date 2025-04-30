@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-
 # SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
 #
 # SPDX-License-Identifier: MIT
 
+import datetime
 import os
 import sys
 
@@ -16,6 +15,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinxcontrib.jquery",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
@@ -27,6 +27,7 @@ extensions = [
 # autodoc module docs will fail to generate with a warning.
 # autodoc_mock_imports = ["digitalio", "busio"]
 
+autodoc_preserve_defaults = True
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
@@ -46,7 +47,12 @@ master_doc = "index"
 
 # General information about the project.
 project = "CircuitPython DisplayIO_Effects Library"
-copyright = "2022 Alec Delaney"
+creation_year = "2022"
+current_year = str(datetime.datetime.now().year)
+year_duration = (
+    current_year if current_year == creation_year else creation_year + " - " + current_year
+)
+copyright = year_duration + " Alec Delaney"
 author = "Alec Delaney"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -63,7 +69,7 @@ release = "1.0"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -101,19 +107,9 @@ napoleon_numpy_docstring = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-on_rtd = os.environ.get("READTHEDOCS", None) == "True"
+import sphinx_rtd_theme
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    try:
-        import sphinx_rtd_theme
-
-        html_theme = "sphinx_rtd_theme"
-        html_theme_path = [sphinx_rtd_theme.get_html_theme_path(), "."]
-    except:
-        html_theme = "default"
-        html_theme_path = ["."]
-else:
-    html_theme_path = ["."]
+html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
