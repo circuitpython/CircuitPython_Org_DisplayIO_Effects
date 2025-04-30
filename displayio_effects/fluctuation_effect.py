@@ -22,7 +22,8 @@ Implementation Notes
 """
 
 import random
-from displayio_effects import WidgetType, WIDGET_TYPE_ATTR
+
+from displayio_effects import WIDGET_TYPE_ATTR, WidgetType
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tekktrik/CircuitPython_Org_DisplayIO_Effects.git"
@@ -79,11 +80,10 @@ def update_fluctuation(self):
         self._fluctuation_destination = None
         return
 
-    if self._fluctuation_destination in (None, self._fluctuation_hold_value):
+    if self._fluctuation_destination in {None, self._fluctuation_hold_value}:
         limit_bound = self._fluctuation_amplitude * 10
         self._fluctuation_destination = (
-            random.uniform(-limit_bound, limit_bound) / 10
-            + self._fluctuation_hold_value
+            random.uniform(-limit_bound, limit_bound) / 10 + self._fluctuation_hold_value
         )
 
     value = getattr(self, value_name)
@@ -124,9 +124,7 @@ def hook_fluctuation_effect(widget_class, widget_type):
     """
 
     if not FLUCTUATION_WIDGET_VALUES.get(widget_type):
-        raise ValueError(
-            "The given widget does not have the ability to use this effect"
-        )
+        raise ValueError("The given widget does not have the ability to use this effect")
 
     setattr(widget_class, WIDGET_TYPE_ATTR, widget_type)
 

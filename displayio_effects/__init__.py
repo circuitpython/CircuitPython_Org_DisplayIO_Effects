@@ -21,8 +21,8 @@ Implementation Notes
   https://circuitpython.org/downloads
 """
 
-
 WIDGET_TYPE_ATTR = "_widget_type"
+
 
 # pylint: disable=too-few-public-methods
 class WidgetType:
